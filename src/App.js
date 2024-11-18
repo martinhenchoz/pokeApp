@@ -1,33 +1,45 @@
+import * as React from 'react'
+import Grid from '@mui/material/Grid2'
+import { Paper, Box, Container, Stack } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { Box, Paper, Grid, Container } from '@mui/material'
-import MyCard from './components/CardMui'
-import { useFetchData } from './hooks/useFetchData'
+import DataProvider from './providers/DataProvider'
+import { Outlet } from 'react-router-dom'
+import Profile from './components/Profile'
+import BasicMenu from './components/Menu'
 
-function App() {
-	const url = 'https://pokeapi.co/api/v2/pokemon'
-	const { data, loading } = useFetchData(url)
-	if (loading) {
-		return <p>'Loading...'</p>
-	} else {
-		if (data) {
-			return (
-				<>
-					<Container maxWidth="md">
-						<h1>POKEAPP</h1>
-						<Box sx={{ flexGrow: 1 }}>
-							<Grid container spacing={3} columns={24}>
-								{data.results.map((pokemon, index) => (
-									<Grid key={index} item xs={8}>
-										<MyCard pokemon={pokemon} index={index} />
-									</Grid>
-								))}
-							</Grid>
-						</Box>
-					</Container>
-				</>
-			)
-		}
-	}
+const Item = styled(Paper)(({ theme }) => ({
+	backgroundColor: '#fff',
+	...theme.typography.body2,
+	padding: theme.spacing(3),
+	textAlign: 'center',
+	color: theme.palette.text.secondary,
+	...theme.applyStyles('dark', {
+		backgroundColor: '#1Af027',
+	}),
+}))
+
+export default function App() {
+	return (
+		<DataProvider>
+			<Container maxWidth="xl">
+				<Box sx={{ flexGrow: 1 }}>
+					<Grid container spacing={3}>
+						<Grid size={3}>
+							<Stack spacing={4} sx={{ justifyContent: 'center' }}>
+								<Item>
+									<BasicMenu />
+								</Item>
+								<Profile />
+							</Stack>
+						</Grid>
+						<Grid size="grow">
+							<Item>
+								<Outlet />
+							</Item>
+						</Grid>
+					</Grid>
+				</Box>
+			</Container>
+		</DataProvider>
+	)
 }
-
-export default App

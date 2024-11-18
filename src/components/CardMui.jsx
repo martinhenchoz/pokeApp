@@ -1,76 +1,81 @@
-// import {
-// 	Button,
-// 	Card,
-// 	CardActionArea,
-// 	CardActions,
-// 	CardContent,
-// 	CardMedia,
-// } from '@mui/material'
-// import { useFetchData } from '../hooks/useFetchData'
+import { useState } from 'react'
+import { useFetchData } from '../hooks/useFetchData'
+import { useAppContext } from '../providers/DataProvider'
+import Modal from './ModalMui'
+import {
+	Card,
+	CardActions,
+	CardContent,
+	CardMedia,
+	Button,
+	Typography,
+} from '@mui/material'
 
-// export default function MyCard({ pokemon, index }) {
-// 	const { data, loading } = useFetchData(pokemon.url)
-// 	console.log(pokemon)
+export default function MyCard({ pokemon }) {
+	const [showModal, setShowModal] = useState(false)
+	const [, dispatch] = useAppContext()
+	const { datos } = useFetchData(pokemon.url)
 
-// 	return (
-// 		<Card
-// 			sx={{
-// 				transition: '0.2s',
-// 				'&:hover': {
-// 					transform: 'scale(1.05)',
-// 				},
-// 			}}
-// 		>
-// 			<CardActionArea>
-// 				<CardMedia
-// 					component="img"
-// 					image=
-// 					height="200"
-// 					alt="Card Image"
-// 				/>
-// 				<CardContent>
-// 					<h2>{pokemon.name}</h2>
-// 				</CardContent>
-// 			</CardActionArea>
+	console.log('Datos del pokemon')
 
-// 			<CardActions>
-// 				<Button variant="contained">Detalles</Button>
-// 			</CardActions>
-// 		</Card>
-// 	)
-// }
+	const handleOpenModal = () => {
+		setShowModal(true)
+	}
 
-// ------
+	const handleCloseModal = () => {
+		setShowModal(false)
+	}
 
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
+	const handleAceptarModal = () => {
+		if (datos) {
+			console.log('Card: ', datos)
 
-export default function MyCard({ pokemon, index }) {
+			dispatch({
+				type: 'SET_PROFILE',
+				data: {
+					pokemon: {
+						name: pokemon.name,
+						image: datos.sprites.front_default,
+					},
+				},
+			})
+			setShowModal(false)
+		}
+	}
+
 	return (
-		<Card sx={{ maxWidth: 345 }}>
-			<CardMedia
-				sx={{ height: 200 }}
-				image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-					index + 1
-				}.png`}
-				title={pokemon.name}
-			/>
-			<CardContent>
-				<Typography gutterBottom variant="h4" component="div">
-					{pokemon.name}
-				</Typography>
-				<Typography variant="body2" sx={{ color: 'text.secondary' }}>
-					Lizards are a widespread group of squamate reptiles, with over 6,000
-					species, ranging across all continents except Antarctica
-				</Typography>
-			</CardContent>
-			<CardActions>
-				<Button size="small">Ver detalle</Button>
-			</CardActions>
-		</Card>
+		datos && (
+			<>
+				<Card sx={{ minWidth: 230 }}>
+					<CardMedia
+						sx={{ height: 150 }}
+						// image={`https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/detail/${idx}.png`}
+						image={datos.sprites.front_default}
+						title={pokemon.name}
+					/>
+
+					<CardContent>
+						<Typography gutterBottom variant="h4" component="div">
+							{pokemon.name}
+						</Typography>
+					</CardContent>
+
+					<CardActions>
+						<Button size="small" onClick={handleOpenModal}>
+							Seleccionar
+						</Button>
+					</CardActions>
+				</Card>
+
+				{showModal && (
+					<Modal
+						pokemon={pokemon}
+						showModal={showModal}
+						handleClose={handleCloseModal}
+						handleAceptar={handleAceptarModal}
+					/>
+				)}
+			</>
+		)
 	)
 }
