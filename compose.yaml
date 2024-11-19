@@ -1,0 +1,12 @@
+services: 
+  pokeapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pokeapp
+    stdin_open: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/home/pokeapp
+      - /home/pokeapp/node_modules

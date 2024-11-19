@@ -3,6 +3,8 @@ import { useFetchData } from '../hooks/useFetchData'
 import { useAppContext } from '../providers/DataProvider'
 import Modal from './ModalMui'
 import {
+	Stack,
+	Chip,
 	Card,
 	CardActions,
 	CardContent,
@@ -16,7 +18,7 @@ export default function MyCard({ pokemon }) {
 	const [, dispatch] = useAppContext()
 	const { datos } = useFetchData(pokemon.url)
 
-	console.log('Datos del pokemon')
+	console.log('CARD')
 
 	const handleOpenModal = () => {
 		setShowModal(true)
@@ -28,15 +30,10 @@ export default function MyCard({ pokemon }) {
 
 	const handleAceptarModal = () => {
 		if (datos) {
-			console.log('Card: ', datos)
-
 			dispatch({
 				type: 'SET_PROFILE',
 				data: {
-					pokemon: {
-						name: pokemon.name,
-						image: datos.sprites.front_default,
-					},
+					pokemon: datos,
 				},
 			})
 			setShowModal(false)
@@ -58,6 +55,11 @@ export default function MyCard({ pokemon }) {
 						<Typography gutterBottom variant="h4" component="div">
 							{pokemon.name}
 						</Typography>
+						<Stack direction="row" spacing={1}>
+							{datos.types.map((type, index) => (
+								<Chip key={index} label={type.type.name} variant="outlined" />
+							))}
+						</Stack>
 					</CardContent>
 
 					<CardActions>

@@ -3,7 +3,7 @@ import Pagination from '@mui/material/Pagination'
 import { useAppContext } from '../providers/DataProvider'
 
 export default function PaginationRounded({ handleChange }) {
-	const [state, dispatch] = useAppContext()
+	const [state] = useAppContext()
 
 	return (
 		<Pagination
