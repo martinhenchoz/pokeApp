@@ -1,14 +1,15 @@
 import {
 	Button,
-	Dialog,
 	DialogActions,
+	Dialog,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
 } from '@mui/material'
 import React from 'react'
+import ModalButtons from './ModalButtons'
 
-export default function ModalMui({
+export default function Modal({
 	pokemon,
 	showModal,
 	handleClose,
@@ -33,10 +34,7 @@ export default function ModalMui({
 						¿Estás seguro que querés seleccionar a {pokemon.name}?
 					</DialogContentText>
 				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleClose}>Cancelar</Button>
-					<Button type="submit">Aceptar</Button>
-				</DialogActions>
+				<ModalButtons handleClose={handleClose} />
 			</Dialog>
 		</React.Fragment>
 	)

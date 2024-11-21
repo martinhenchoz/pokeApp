@@ -1,8 +1,8 @@
 import Grid from '@mui/material/Grid2'
-import MyCard from './CardMui'
+import MyCard from './Card'
+import PaginationRounded from './Pagination'
 import { useAppContext } from '../providers/DataProvider'
 import { useFetchData } from '../hooks/useFetchData'
-import PaginationRounded from './Pagination'
 import { Stack } from '@mui/material'
 
 export default function Listado() {
@@ -20,7 +20,7 @@ export default function Listado() {
 				actualPage: value,
 			},
 		})
-		console.log('Pagina: ', state.pokemons.actualPage)
+		console.log('Pagina: ', value)
 		console.log('Url: ', state.pokemons.url)
 	}
 

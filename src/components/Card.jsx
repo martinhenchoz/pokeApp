@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useFetchData } from '../hooks/useFetchData'
 import { useAppContext } from '../providers/DataProvider'
-import Modal from './ModalMui'
+import Modal from './Modal'
 import {
 	Stack,
 	Chip,
@@ -28,7 +28,7 @@ export default function MyCard({ pokemon }) {
 		setShowModal(false)
 	}
 
-	const handleAceptarModal = () => {
+	const handleAceptarModal = useCallback(() => {
 		if (datos) {
 			dispatch({
 				type: 'SET_PROFILE',
@@ -38,7 +38,7 @@ export default function MyCard({ pokemon }) {
 			})
 			setShowModal(false)
 		}
-	}
+	})
 
 	return (
 		datos && (

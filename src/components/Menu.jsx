@@ -7,8 +7,9 @@ import {
 	ListItemIcon,
 	ListItemText,
 } from '@mui/material'
-import InboxIcon from '@mui/icons-material/Inbox'
-import DraftsIcon from '@mui/icons-material/Drafts'
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
+import PlayCircleIcon from '@mui/icons-material/PlayCircle'
+import SortIcon from '@mui/icons-material/Sort'
 import { useNavigate } from 'react-router-dom'
 
 export default function BasicMenu() {
@@ -25,7 +26,7 @@ export default function BasicMenu() {
 					<ListItem disablePadding>
 						<ListItemButton>
 							<ListItemIcon>
-								<InboxIcon />
+								<FormatListBulletedIcon />
 							</ListItemIcon>
 							<ListItemText primary="Listado" onClick={handleClick} />
 						</ListItemButton>
@@ -33,7 +34,7 @@ export default function BasicMenu() {
 					<ListItem disablePadding>
 						<ListItemButton>
 							<ListItemIcon>
-								<DraftsIcon />
+								<SortIcon />
 							</ListItemIcon>
 							<ListItemText primary="Ranking" onClick={handleClick} />
 						</ListItemButton>
@@ -41,7 +42,7 @@ export default function BasicMenu() {
 					<ListItem disablePadding>
 						<ListItemButton>
 							<ListItemIcon>
-								<DraftsIcon />
+								<PlayCircleIcon />
 							</ListItemIcon>
 							<ListItemText primary="Partido" onClick={handleClick} />
 						</ListItemButton>
