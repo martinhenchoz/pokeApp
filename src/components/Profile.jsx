@@ -1,23 +1,38 @@
-import { Stack, Chip, Card, CardContent, CardMedia, Typography } from '@mui/material'
+import {
+	Stack,
+	Chip,
+	Card,
+	CardContent,
+	CardMedia,
+	Typography,
+} from '@mui/material'
 import { useAppContext } from '../providers/DataProvider'
 
 export default function Profile() {
 	const [state] = useAppContext()
+	const id = state.profile.pokemon.id.toString().padStart(3, '0')
 
 	return (
 		state.profile.pokemon && (
-			<Card>
+			<Card sx={{ minWidth: 300 }}>
 				<CardMedia
+					sx={{ display: 'flex', justifyContent: 'center', width: 250 }}
 					component="img"
 					alt={state.profile.pokemon.name}
-					height="200"
-					image={state.profile.pokemon.sprites.front_default}
+					image={`https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/${id}.png`}
 				/>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
-						{state.profile.pokemon.name}
-					</Typography>
-					<Stack direction="row" spacing={1}>
+					<div style={{ display: 'flex', justifyContent: 'center' }}>
+						<Typography gutterBottom variant="h5">
+							Mi Pokemon es: {state.profile.pokemon.name}
+						</Typography>
+					</div>
+
+					<Stack
+						direction="row"
+						spacing={2}
+						style={{ justifyContent: 'center' }}
+					>
 						{state.profile.pokemon.types.map((type, index) => (
 							<Chip key={index} label={type.type.name} variant="outlined" />
 						))}

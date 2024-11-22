@@ -3,29 +3,30 @@ import MyCard from './Card'
 import PaginationRounded from './Pagination'
 import { useAppContext } from '../providers/DataProvider'
 import { useFetchData } from '../hooks/useFetchData'
-import { Stack } from '@mui/material'
+import { Box, CircularProgress, Stack } from '@mui/material'
 
 export default function Listado() {
 	const [state, dispatch] = useAppContext()
 	const { datos, loading } = useFetchData(state.pokemons.url)
 
-	const handleChange = (e, value) => {
-		const offset = value * 20
+	const handleChange = (event, page) => {
+		const offset = page === 1 ? '' : '?offset=' + page * 20 + '&limit=20'
 		dispatch({
 			type: 'SET_POKEMONS',
 			data: {
-				url: 'https://pokeapi.co/api/v2/pokemon?offset=' + offset + '&limit=20',
-				count: datos.count,
+				url: 'https://pokeapi.co/api/v2/pokemon' + offset,
 				pages: Math.floor(datos.count / 20),
-				actualPage: value,
+				actualPage: page,
 			},
 		})
-		console.log('Pagina: ', value)
-		console.log('Url: ', state.pokemons.url)
 	}
 
 	if (loading) {
-		return <p>'Loading...'</p>
+		return (
+			<Box sx={{ display: 'flex' }}>
+				<CircularProgress />
+			</Box>
+		)
 	} else {
 		return (
 			datos && (

@@ -18,6 +18,11 @@ const reducer = (state, action) => {
 		case 'SET_RANKING': {
 			return { ...state, ranking: { ...action.data } }
 		}
+		case 'SET_MATCH': {
+			return { ...state, match: { ...action.data } }
+		}
+		default:
+		// no action
 	}
 	return state
 }
@@ -26,7 +31,6 @@ const DataProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, {
 		pokemons: {
 			url: 'https://pokeapi.co/api/v2/pokemon',
-			datos: null,
 			pages: 20,
 			actualPage: 1,
 		},
